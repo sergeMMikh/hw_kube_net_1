@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service-nodeport
+spec:
+  selector:
+    app: nginx-multitool
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30001  # Указать желаемый NodePort
+  type: NodePort
