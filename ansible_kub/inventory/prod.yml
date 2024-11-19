@@ -1,0 +1,23 @@
+---
+all:
+  children:
+    first:
+      hosts:
+        first:
+          ansible_host: 192.168.33.101
+          ansible_ssh_user: vagrant
+          ansible_ssh_private_key_file: "/home/smm/.ssh/id_rsa.pem"
+
+    second:
+      hosts:
+        second:
+          ansible_host: 192.168.33.102
+          ansible_ssh_user: vagrant
+          ansible_ssh_private_key_file: "/home/smm/.ssh/id_rsa.pem"
+
+    third:
+      hosts:
+        third:
+          ansible_host: 192.168.33.103
+          ansible_ssh_user: vagrant
+          ansible_ssh_private_key_file: "/home/smm/.ssh/id_rsa.pem"

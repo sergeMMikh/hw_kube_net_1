@@ -1,0 +1,53 @@
+---
+- name: Setup MicroK8s on Ubuntu hosts
+  hosts: all
+  become: true  # Используем true вместо yes
+  tasks:
+    - name: Update apt package list
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Upgrade all packages
+      ansible.builtin.apt:
+        upgrade: dist
+        update_cache: true
+
+    - name: Install MicroK8s
+      community.general.snap:
+        name: microk8s
+        classic: true
+        state: present
+
+    - name: Add current user to MicroK8s group
+      ansible.builtin.command:
+        cmd: usermod -a -G microk8s {{ ansible_user }}
+      changed_when: false
+
+    - name: Change ownership of .kube directory
+      ansible.builtin.command:
+        cmd: chown -f -R {{ ansible_user }} ~/.kube
+      failed_when: false
+      changed_when: false
+
+    - name: Start MicroK8s
+      ansible.builtin.command:
+        cmd: microk8s start
+      changed_when: false
+
+    - name: Enable MicroK8s addons
+      ansible.builtin.command:
+        cmd: microk8s enable dns storage dashboard
+      changed_when: false
+
+    - name: Create alias for MicroK8s kubectl
+      ansible.builtin.lineinfile:
+        path: /home/{{ ansible_user }}/.bashrc
+        line: 'alias kubectl="microk8s kubectl"'
+        state: present
+      become: false  # Выполняется от имени текущего пользователя
+
+  handlers:
+    - name: Restart MicroK8s
+      ansible.builtin.command:
+        cmd: microk8s stop && microk8s start
+      changed_when: false
