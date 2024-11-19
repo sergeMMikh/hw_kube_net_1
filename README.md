@@ -51,5 +51,9 @@ curl app-service:9002  # Проверка доступа к multitool
 2. Нашёл IP нода: `kubectl get nodes -o wide`
 3. Проверил доступ с помощью браузера или `curl` с локального компьютера.
 <img src="images/Task_2_1.png" alt="Task_2_1.png" width="500" height="auto"></br>
+4. После проверки вышел из виртуальной машины и проверил доступность сервиса по порту:</br>
+<img src="images/Task_2_2.png" alt="Task_2_2.png" width="400" height="auto"></br>
+5. Проверил доступность nginx через браузер:</br>
+<img src="images/Task_2_3.png" alt="Task_2_3.png" width="400" height="auto"></br>
 
 ------
